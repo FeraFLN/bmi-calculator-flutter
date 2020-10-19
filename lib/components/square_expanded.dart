@@ -1,6 +1,8 @@
-import 'package:bmi_calculator/bmi_content.dart';
+import 'package:bmi_calculator/components/square_container.dart';
 import 'package:flutter/material.dart';
-import 'square_container.dart';
+
+import '../bmi_content.dart';
+
 class SquareExpanded extends StatelessWidget {
   SquareExpanded({@required this.color,this.bmiContent,this.onTap});
   final Color color;

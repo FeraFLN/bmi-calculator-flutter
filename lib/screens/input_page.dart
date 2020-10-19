@@ -1,13 +1,17 @@
-import 'package:bmi_calculator/bmi_content.dart';
+import 'package:bmi_calculator/bmi_calculator.dart';
+import 'package:bmi_calculator/components/square_expanded.dart';
+import 'package:bmi_calculator/constantes.dart';
+import 'package:bmi_calculator/screens/results_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'square_expanded.dart';
+import '../bmi_content.dart';
+import '../components/bottom_button.dart';
+import '../gender_enum.dart';
 
 
-const Color activeCardColor = Color(0xFF1D1E33);
-const Color inactiveCardColor = Color(0xFF111328);
-const double heightBotton = 80.0;
+
+
 
 
 class InputPage extends StatefulWidget {
@@ -16,8 +20,8 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-  Color maleColor = activeCardColor;
-  Color femaleColor = activeCardColor;
+  Color maleColor = kActiveCardColor;
+  Color femaleColor = kActiveCardColor;
   int height = 180;
   int weight =60;
   int age = 19;
@@ -25,9 +29,9 @@ class _InputPageState extends State<InputPage> {
     return () {
       setState(() {
         this.maleColor =
-        gender == Gender.male ? activeCardColor : inactiveCardColor;
+        gender == Gender.male ? kActiveCardColor : kInactiveCardColor;
         this.femaleColor =
-        gender == Gender.female ? activeCardColor : inactiveCardColor;
+        gender == Gender.female ? kActiveCardColor : kInactiveCardColor;
       });
     };
   }
@@ -69,7 +73,7 @@ class _InputPageState extends State<InputPage> {
               child:Row(
                 children: [
                   SquareExpanded(
-                      color:activeCardColor,
+                      color:kActiveCardColor,
                       bmiContent: SlideBar(
                         height: height,
                         onChange: (double newValue){
@@ -85,7 +89,7 @@ class _InputPageState extends State<InputPage> {
               child:Row(
                 children: [
                     SquareExpanded(
-                      color:activeCardColor,
+                      color:kActiveCardColor,
                       bmiContent: MinusPlusContent(
                           header: "WEIGHT",
                           weight: weight,
@@ -105,7 +109,7 @@ class _InputPageState extends State<InputPage> {
 
                     ),
                     SquareExpanded(
-                        color:activeCardColor,
+                        color:kActiveCardColor,
                         bmiContent: MinusPlusContent(
                             header: "AGE",
                             weight: age,
@@ -126,11 +130,20 @@ class _InputPageState extends State<InputPage> {
                 ],
               )
           ),
-          Container(
-            color: Colors.red,
-            margin: EdgeInsets.only(top: 10.0),
-            width: double.infinity,
-            height: heightBotton,
+          BottomButton(
+              label: 'Calculate',
+
+              onTap:  (){
+                BmiCalculator calc =BmiCalculator(height:this.height,weight: this.weight);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context)=> ResultPage(
+                          bmiCalculator: calc,
+                        )
+                    ),
+                );
+              },
           )
         ],
       )
@@ -139,10 +152,8 @@ class _InputPageState extends State<InputPage> {
   }
 }
 
-enum Gender{
-  male,
-  female
-}
+
+
 
 
 

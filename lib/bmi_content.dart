@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:bmi_calculator/constantes.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'bmi_calculator.dart';
+
 
 
 abstract class BmiContent{
@@ -109,7 +111,30 @@ class MinusPlusContent extends BmiContent{
   }
 
 }
+class ResultContent extends BmiContent{
+  final BmiCalculator bmiCalculator;
+  ResultContent({this.bmiCalculator});
+  @override
+  List<Widget> build() {
+    return [
+      Text(
+          this.bmiCalculator.getResult(),
+          style: kResultTextStyle,
+      ),
+      Text(
+          this.bmiCalculator.calculateBMI(),
+          style: kBMITextStyle,
+      ),
 
+      Text(
+          this.bmiCalculator.getInterpretation(),
+          style: kBodyTextStyle,
+          textAlign: TextAlign.center,
+      ),
+    ];
+  }
+
+}
 
 class RoundIconButton extends StatelessWidget{
   final IconData icon;
